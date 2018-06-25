@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './homeScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class KontakScreen2 extends StatefulWidget {
@@ -36,20 +37,23 @@ class _KontakScreen2 extends State<KontakScreen2> {
             ),
           ),
           actions: <Widget>[
-            Container(
-              width: 40.0,
-              height: 40.0,
-              margin: EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                image: DecorationImage(
-                  image: AssetImage('assets/logo/logo3.png'),
-                  fit: BoxFit.cover,
-                ),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(50.0),
+            GestureDetector(
+              child: Container(
+                width: 40.0,
+                height: 40.0,
+                margin: EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  image: DecorationImage(
+                    image: AssetImage('assets/logo/logo3.png'),
+                    fit: BoxFit.cover,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(50.0),
+                  ),
                 ),
               ),
+              onTap: () => devsDialog(context),
             ),
           ],
         ),
