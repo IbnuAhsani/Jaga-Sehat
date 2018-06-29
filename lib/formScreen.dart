@@ -11,6 +11,7 @@ class FormScreen extends StatefulWidget {
 
 class _FormScreenState extends State<FormScreen> {
   String selectedJk, selectedPendidikan, selectedPekerjaan;
+  Map<String, String> timeStamp;
   Item item;
   List<Item> items = List();
   DatabaseReference itemRef;
@@ -21,7 +22,7 @@ class _FormScreenState extends State<FormScreen> {
   void initState() {
     super.initState();
 
-    item = Item("", "", "", "", "");
+    item = Item("", "", "", "", "", ServerValue.timestamp);
     final FirebaseDatabase database = FirebaseDatabase.instance;
     itemRef = database.reference().child('data_pengguna');
   }
@@ -82,218 +83,218 @@ class _FormScreenState extends State<FormScreen> {
             Container(
               margin: EdgeInsets.only(left: 8.0, right: 8.0),
               child: Center(
-              child: Card(
-                elevation: 0.5,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      width: 160.0,
-                      height: 160.0,
-                      margin: EdgeInsets.only(top: 16.0),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                        image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: AssetImage('assets/logo/logo3.png'),
-                        ),
-                        border: Border.all(
-                          color: Color(0xFF512E67),
-                          width: 1.0,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(
-                        top: 12.0,
-                        bottom: 12.0,
-                      ),
-                      child: Text(
-                        'Form Data Demografi',
-                        style: TextStyle(
-                          fontSize: 24.0,
-                          color: Color(0xFFC54C82),
+                child: Card(
+                  elevation: 0.5,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        width: 160.0,
+                        height: 160.0,
+                        margin: EdgeInsets.only(top: 16.0),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                          image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: AssetImage('assets/logo/logo3.png'),
+                          ),
+                          border: Border.all(
+                            color: Color(0xFF512E67),
+                            width: 1.0,
+                          ),
                         ),
                       ),
-                    ),
-                    Form(
-                      key: formKey,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                flex: 1,
-                                child: ListTile(
-                                  dense: true,
-                                  leading: const Icon(
-                                    Icons.person,
-                                    color: const Color(0xFFC54C82),
-                                  ),
-                                  title: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      DropdownButton<String>(
-                                        hint: Text('Kelamin'),
-                                        value: selectedJk,
-                                        onChanged: (newVal) {
-                                          item.jk = newVal;
-                                          setState(() {
-                                            selectedJk = newVal;
-                                          });
-                                        },
-                                        items: <String>[
-                                          'Pria',
-                                          'Wanita',
-                                        ].map((String value) {
-                                          return DropdownMenuItem<String>(
-                                            value: value,
-                                            child: Text(value),
-                                          );
-                                        }).toList(),
-                                      ),
-                                    ],
+                      Container(
+                        padding: EdgeInsets.only(
+                          top: 12.0,
+                          bottom: 12.0,
+                        ),
+                        child: Text(
+                          'Form Data Demografi',
+                          style: TextStyle(
+                            fontSize: 24.0,
+                            color: Color(0xFFC54C82),
+                          ),
+                        ),
+                      ),
+                      Form(
+                        key: formKey,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                Expanded(
+                                  flex: 1,
+                                  child: ListTile(
+                                    dense: true,
+                                    leading: const Icon(
+                                      Icons.person,
+                                      color: const Color(0xFFC54C82),
+                                    ),
+                                    title: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        DropdownButton<String>(
+                                          hint: Text('Kelamin'),
+                                          value: selectedJk,
+                                          onChanged: (newVal) {
+                                            item.jk = newVal;
+                                            setState(() {
+                                              selectedJk = newVal;
+                                            });
+                                          },
+                                          items: <String>[
+                                            'Pria',
+                                            'Wanita',
+                                          ].map((String value) {
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(value),
+                                            );
+                                          }).toList(),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Expanded(
-                                child: ListTile(
-                                  dense: true,
-                                  leading: const Icon(
-                                    Icons.calendar_today,
-                                    color: const Color(0xFFC54C82),
-                                  ),
-                                  title: TextFormField(
-                                    decoration:
-                                        InputDecoration(hintText: "Usia"),
-                                    keyboardType: TextInputType.number,
-                                    initialValue: "",
-                                    onSaved: (val) => item.usia = val,
-                                    validator: (value) => value.isEmpty
-                                        ? 'Email can\'t be empty'
-                                        : null,
+                                Expanded(
+                                  child: ListTile(
+                                    dense: true,
+                                    leading: const Icon(
+                                      Icons.calendar_today,
+                                      color: const Color(0xFFC54C82),
+                                    ),
+                                    title: TextFormField(
+                                      decoration:
+                                          InputDecoration(hintText: "Usia"),
+                                      keyboardType: TextInputType.number,
+                                      initialValue: "",
+                                      onSaved: (val) => item.usia = val,
+                                      validator: (value) => value.isEmpty
+                                          ? 'Email can\'t be empty'
+                                          : null,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          Flexible(
-                            child: ListTile(
-                              leading: const Icon(
-                                Icons.import_contacts,
-                                color: const Color(0xFFC54C82),
-                              ),
-                              title: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  DropdownButton<String>(
-                                    hint: Text('Tingkat Pendidikan'),
-                                    value: selectedPendidikan,
-                                    onChanged: (newVal) {
-                                      item.pendidikan = newVal;
-                                      setState(() {
-                                        selectedPendidikan = newVal;
-                                      });
-                                    },
-                                    items: <String>[
-                                      'SD',
-                                      'SMP',
-                                      'SMA',
-                                      'Perguruan Tinggi',
-                                    ].map((String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
-                                  ),
-                                ],
+                              ],
+                            ),
+                            Flexible(
+                              child: ListTile(
+                                leading: const Icon(
+                                  Icons.import_contacts,
+                                  color: const Color(0xFFC54C82),
+                                ),
+                                title: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    DropdownButton<String>(
+                                      hint: Text('Tingkat Pendidikan'),
+                                      value: selectedPendidikan,
+                                      onChanged: (newVal) {
+                                        item.pendidikan = newVal;
+                                        setState(() {
+                                          selectedPendidikan = newVal;
+                                        });
+                                      },
+                                      items: <String>[
+                                        'SD',
+                                        'SMP',
+                                        'SMA',
+                                        'Perguruan Tinggi',
+                                      ].map((String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(value),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          Flexible(
-                            child: ListTile(
-                              leading: const Icon(
-                                Icons.work,
-                                color: const Color(0xFFC54C82),
-                              ),
-                              title: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: <Widget>[
-                                  DropdownButton<String>(
-                                    hint: Text('Pekerjaan'),
-                                    value: selectedPekerjaan,
-                                    onChanged: (newVal) {
-                                      item.pekerjaan = newVal;
-                                      setState(() {
-                                        selectedPekerjaan = newVal;
-                                      });
-                                    },
-                                    items: <String>[
-                                      'PNS',
-                                      'Pegawai Swasta',
-                                      'Wiraswasta',
-                                      'Mahasiswa',
-                                      'Pelajar',
-                                      'Lainnya'
-                                    ].map((String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                            child: ListTile(
-                              leading: const Icon(
-                                Icons.email,
-                                color: const Color(0xFFC54C82),
-                              ),
-                              title: TextFormField(
-                                decoration: InputDecoration(hintText: "Email"),
-                                initialValue: "",
-                                onSaved: (val) => item.email = val,
-                                validator: (value) => value.isEmpty
-                                    ? 'Email can\'t be empty'
-                                    : null,
+                            Flexible(
+                              child: ListTile(
+                                leading: const Icon(
+                                  Icons.work,
+                                  color: const Color(0xFFC54C82),
+                                ),
+                                title: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: <Widget>[
+                                    DropdownButton<String>(
+                                      hint: Text('Pekerjaan'),
+                                      value: selectedPekerjaan,
+                                      onChanged: (newVal) {
+                                        item.pekerjaan = newVal;
+                                        setState(() {
+                                          selectedPekerjaan = newVal;
+                                        });
+                                      },
+                                      items: <String>[
+                                        'PNS',
+                                        'Pegawai Swasta',
+                                        'Wiraswasta',
+                                        'Mahasiswa',
+                                        'Pelajar',
+                                        'Lainnya'
+                                      ].map((String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(value),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          Container(
-                            width: screenSize.width,
-                            margin: EdgeInsets.all(20.0),
-                            child: RaisedButton(
-                              color: Color(0xFF512E67),
-                              child: Text(
-                                'Unggah',
-                                style: TextStyle(color: Colors.white),
+                            Flexible(
+                              child: ListTile(
+                                leading: const Icon(
+                                  Icons.email,
+                                  color: const Color(0xFFC54C82),
+                                ),
+                                title: TextFormField(
+                                  decoration:
+                                      InputDecoration(hintText: "Email"),
+                                  initialValue: "",
+                                  onSaved: (val) => item.email = val,
+                                  validator: (value) => value.isEmpty
+                                      ? 'Email can\'t be empty'
+                                      : null,
+                                ),
                               ),
-                              onPressed: () {
-                                handleSubmit();
-                                var routes = MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      HomeScreen(),
-                                );
-                                Navigator.of(context).pushReplacement(routes);
-                              },
                             ),
-                          ),
-                        ],
+                            Container(
+                              width: screenSize.width,
+                              margin: EdgeInsets.all(20.0),
+                              child: RaisedButton(
+                                color: Color(0xFF512E67),
+                                child: Text(
+                                  'Unggah',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                onPressed: () {
+                                  handleSubmit();
+                                  var routes = MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        HomeScreen(),
+                                  );
+                                  Navigator.of(context).pushReplacement(routes);
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-            ),
-            
           ],
         ),
       ),
@@ -342,8 +343,9 @@ _disclaimerDialog(BuildContext context) {
 
 class Item {
   String key, jk, usia, pendidikan, pekerjaan, email;
+  Map<String, String> timeStamp;
 
-  Item(this.jk, this.usia, this.pendidikan, this.pekerjaan, this.email);
+  Item(this.jk, this.usia, this.pendidikan, this.pekerjaan, this.email, this.timeStamp);
 
   Item.fromSnapshot(DataSnapshot snapshot)
       : key = snapshot.key,
@@ -351,7 +353,8 @@ class Item {
         usia = snapshot.value["usia"],
         pendidikan = snapshot.value["pendidikan"],
         pekerjaan = snapshot.value["pekerjaan"],
-        email = snapshot.value["email"];
+        email = snapshot.value["email"],
+        timeStamp = ServerValue.timestamp;
 
   toJson() {
     return {
@@ -360,6 +363,7 @@ class Item {
       "pendidikan": pendidikan,
       "pekerjaan": pekerjaan,
       "email": email,
+      "time_stamp": timeStamp,
     };
   }
 }
