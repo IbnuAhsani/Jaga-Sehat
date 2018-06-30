@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import './homeScreen.dart';
+import './reusableWidgets.dart';
+import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class KontakScreen2 extends StatefulWidget {
@@ -9,6 +10,15 @@ class KontakScreen2 extends StatefulWidget {
 class _KontakScreen2 extends State<KontakScreen2> {
   @override
   Widget build(BuildContext context) {
+    var backButton = IconButton(
+        icon: Icon(
+          Icons.arrow_back,
+          color: Color(0xFFC54C82),
+        ),
+        onPressed: () {
+          Navigator.pop(context, true);
+        });
+        
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -17,45 +27,8 @@ class _KontakScreen2 extends State<KontakScreen2> {
       ),
       home: Scaffold(
         backgroundColor: Color(0xFF512E67),
-        appBar: AppBar(
-          elevation: 0.5,
-          backgroundColor: Colors.white,
-          leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back,
-                color: Color(0xFFC54C82),
-              ),
-              onPressed: () {
-                Navigator.pop(context, true);
-              }),
-          title: Text(
-            'jaga sehat',
-            style: TextStyle(
-              color: Color(0xFFC54C82),
-              fontSize: 26.0,
-              fontFamily: 'Kelvetica',
-            ),
-          ),
-          actions: <Widget>[
-            GestureDetector(
-              child: Container(
-                width: 40.0,
-                height: 40.0,
-                margin: EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  image: DecorationImage(
-                    image: AssetImage('assets/logo/logo3.png'),
-                    fit: BoxFit.cover,
-                  ),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(50.0),
-                  ),
-                ),
-              ),
-              onTap: () => devsDialog(context),
-            ),
-          ],
+        appBar: CustomAppBar3(
+          button: backButton,
         ),
         body: Container(
           margin: EdgeInsets.only(right: 8.0, left: 8.0),
@@ -179,16 +152,15 @@ class ListTileWidget extends StatelessWidget {
       );
     } else if (type == 'fax') {
       return Container(
-        margin: EdgeInsets.only(left: 8.0),
-        child: ListTile(
-        dense: true,
-        leading: Icon(
-          Icons.print,
-          color: Color(0xFFC54C82),
-        ),
-        title: Text('$data'),
-      ) 
-      ); 
+          margin: EdgeInsets.only(left: 8.0),
+          child: ListTile(
+            dense: true,
+            leading: Icon(
+              Icons.print,
+              color: Color(0xFFC54C82),
+            ),
+            title: Text('$data'),
+          ));
     } else if (type == 'fb') {
       return Row(
         children: <Widget>[

@@ -1,4 +1,5 @@
 import './homeScreen.dart';
+import './reusableWidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -50,27 +51,7 @@ class _FormScreenState extends State<FormScreen> {
       ),
       home: Scaffold(
         resizeToAvoidBottomPadding: false,
-        appBar: AppBar(
-          elevation: 1.0,
-          backgroundColor: Colors.white,
-          title: Text(
-            'jaga sehat',
-            style: TextStyle(
-              color: Color(0xFFC54C82),
-              fontFamily: 'Kelvetica',
-              fontSize: 26.0,
-            ),
-          ),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.help,
-                color: Color(0xFFC54C82),
-              ),
-              onPressed: () => _disclaimerDialog(context),
-            )
-          ],
-        ),
+        appBar: CustomAppBar1(),
         body: Stack(
           fit: StackFit.expand,
           children: <Widget>[
@@ -300,45 +281,6 @@ class _FormScreenState extends State<FormScreen> {
       ),
     );
   }
-}
-
-_disclaimerDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    child: Center(
-      child: Container(
-        width: 320.0,
-        height: 280.0,
-        child: Card(
-          elevation: 0.5,
-          child: Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Icon(
-                  Icons.lock_outline,
-                  color: Color(0xFFC54C82),
-                  size: 96.0,
-                ),
-                Container(
-                  margin: EdgeInsets.all(16.0),
-                  child: Text(
-                    'Data ini hanya digunakan demi kerepluan riset, dan tidak akan disebarluaskan',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Color(0xFFC54C82),
-                      fontSize: 22.0,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
 }
 
 class Item {

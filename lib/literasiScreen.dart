@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import './homeScreen.dart';
+import './reusableWidgets.dart';
+import 'package:flutter/material.dart';
 
 class LiterasiScreen extends StatefulWidget {
   @override
@@ -22,70 +23,39 @@ class _LiterasiScreen extends State<LiterasiScreen>
     super.dispose();
   }
 
-  void _nextPage(int delta) {
-    final int newIndex = _tabController.index + delta;
-    if (newIndex < 0 || newIndex >= _tabController.length) return;
-    _tabController.animateTo(newIndex);
-  }
-
   @override
   Widget build(BuildContext context) {
+    var backButton = IconButton(
+      icon: Icon(
+        Icons.arrow_back,
+        color: Color(0xFFC54C82),
+      ),
+      onPressed: () {
+        Navigator.pop(context, true);
+      },
+    );
+
+    var bottom = PreferredSize(
+      preferredSize: const Size.fromHeight(38.0),
+      child: Theme(
+        data: Theme.of(context).copyWith(accentColor: Color(0xFFC54C82)),
+        child: Container(
+          height: 38.0,
+          alignment: Alignment.center,
+          child: TabPageSelector(controller: _tabController),
+        ),
+      ),
+    );
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'Myriad-Pro',
       ),
       home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0.5,
-          title: Text(
-            'jaga sehat',
-            style: TextStyle(
-              color: Color(0xFFC54C82),
-              fontSize: 26.0,
-              fontFamily: 'Kelvetica',
-            ),
-          ),
-          leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back,
-                color: Color(0xFFC54C82),
-              ),
-              onPressed: () {
-                Navigator.pop(context, true);
-              }),
-          actions: <Widget>[
-            GestureDetector(
-              child: Container(
-                width: 40.0,
-                height: 40.0,
-                margin: EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  image: DecorationImage(
-                    image: AssetImage('assets/logo/logo3.png'),
-                    fit: BoxFit.cover,
-                  ),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(50.0),
-                  ),
-                ),
-              ),
-              onTap: () => devsDialog(context),
-            ),
-          ],
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(38.0),
-            child: Theme(
-              data: Theme.of(context).copyWith(accentColor: Color(0xFFC54C82)),
-              child: Container(
-                height: 38.0,
-                alignment: Alignment.center,
-                child: TabPageSelector(controller: _tabController),
-              ),
-            ),
-          ),
+        appBar: CustomAppBar4(
+          button: backButton,
+          bottoms: bottom,
         ),
         body: Container(
           color: Color(0xFFC54C82),
