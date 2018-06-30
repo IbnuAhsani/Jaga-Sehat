@@ -58,7 +58,7 @@ class _KontakScreen2 extends State<KontakScreen2> {
           ],
         ),
         body: Container(
-          margin: EdgeInsets.all(8.0),
+          margin: EdgeInsets.only(right: 8.0, left: 8.0),
           child: ListView(
             children: <Widget>[
               CardWidget('assets/pic/bcs.png', dataBcs),
@@ -132,13 +132,16 @@ class ListTileWidget extends StatelessWidget {
         ),
       );
     } else if (type == 'alamat') {
-      return ListTile(
-        dense: true,
-        leading: Icon(
-          Icons.map,
-          color: Color(0xFFC54C82),
+      return Container(
+        margin: EdgeInsets.only(left: 8.0),
+        child: ListTile(
+          dense: true,
+          leading: Icon(
+            Icons.map,
+            color: Color(0xFFC54C82),
+          ),
+          title: Text('$data'),
         ),
-        title: Text('$data'),
       );
     } else if (type == 'email') {
       return ListTile(
@@ -175,20 +178,23 @@ class ListTileWidget extends StatelessWidget {
         ),
       );
     } else if (type == 'fax') {
-      return ListTile(
+      return Container(
+        margin: EdgeInsets.only(left: 8.0),
+        child: ListTile(
         dense: true,
         leading: Icon(
           Icons.print,
           color: Color(0xFFC54C82),
         ),
         title: Text('$data'),
-      );
+      ) 
+      ); 
     } else if (type == 'fb') {
       return Row(
         children: <Widget>[
           Container(
             margin: EdgeInsets.only(
-              left: 10.0,
+              left: 16.0,
               right: 10.0,
             ),
             child: IconButton(

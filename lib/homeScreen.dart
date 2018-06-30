@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 import './kontakScreen.dart';
 import './kontakScreen2.dart';
 import './literasiScreen.dart';
@@ -9,6 +10,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String text =
+      "jaga sehat adalah aplikasi Literasi Kesehatan mengenai penyakit Kanker Payudara, yang terdiri dari fitur Literasi dan juga Kontak dari beberapa lembaga kesehatan.\n Aplikasinya bisa diunduh di -->";
   @override
   Widget build(BuildContext context) {
     final TextStyle textStyle = Theme.of(context).textTheme.button;
@@ -25,9 +28,10 @@ class _HomeScreenState extends State<HomeScreen> {
           title: Text(
             'Jaga Sehat',
             style: TextStyle(
-                color: Color(0xFFC54C82),
-                fontSize: 26.0,
-                fontFamily: 'Kelvetica',),
+              color: Color(0xFFC54C82),
+              fontSize: 26.0,
+              fontFamily: 'Kelvetica',
+            ),
           ),
           actions: <Widget>[
             GestureDetector(
@@ -109,6 +113,39 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                   ),
                 ),
+                Builder(
+                  builder: (BuildContext context) {
+                    return Container(
+                      margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                      child: RaisedButton(
+                        elevation: 2.5,
+                        padding: EdgeInsets.all(40.0),
+                        color: Color(0xFFFF6699),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Icon(
+                              Icons.share,
+                              size: 60.0,
+                              color: Colors.white,
+                            ),
+                            Text(
+                              'Bagikan',
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 36.0),
+                            ),
+                          ],
+                        ),
+                        onPressed: () {
+                          final RenderBox box = context.findRenderObject();
+                          Share.share(text,
+                              sharePositionOrigin:
+                                  box.localToGlobal(Offset.zero) & box.size);
+                        },
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ),
@@ -142,9 +179,12 @@ devsDialog(BuildContext context) {
                     ),
                   ),
                 ),
-                NameWidget('assets/photo/20.jpg', '140810160020', 'Hasna Karimah'),
-                NameWidget('assets/photo/42.jpg', '140810160042', 'Aditya Rizky F.'),
-                NameWidget('assets/photo/54.jpg', '140810160054', 'Ibnu Ahsani'),
+                NameWidget(
+                    'assets/photo/20.jpg', '140810160020', 'Hasna Karimah'),
+                NameWidget(
+                    'assets/photo/42.jpg', '140810160042', 'Aditya Rizky F.'),
+                NameWidget(
+                    'assets/photo/54.jpg', '140810160054', 'Ibnu Ahsani'),
               ],
             ),
           ),
@@ -193,8 +233,14 @@ class NameWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text('$_npm', style: TextStyle(color: Color(0xFFC54C82), fontSize: 20.0),),
-            Text('$_name', style: TextStyle(color: Color(0xFF512E67), fontSize: 18.0),),
+            Text(
+              '$_npm',
+              style: TextStyle(color: Color(0xFFC54C82), fontSize: 20.0),
+            ),
+            Text(
+              '$_name',
+              style: TextStyle(color: Color(0xFF512E67), fontSize: 18.0),
+            ),
           ],
         ),
       ],

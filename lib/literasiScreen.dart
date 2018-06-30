@@ -31,75 +31,75 @@ class _LiterasiScreen extends State<LiterasiScreen>
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          fontFamily: 'Myriad-Pro',
-        ),
-        home: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            elevation: 0.5,
-            title: Text(
-              'jaga sehat',
-              style: TextStyle(
-                color: Color(0xFFC54C82),
-                fontSize: 26.0,
-                fontFamily: 'Kelvetica',
-              ),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        fontFamily: 'Myriad-Pro',
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0.5,
+          title: Text(
+            'jaga sehat',
+            style: TextStyle(
+              color: Color(0xFFC54C82),
+              fontSize: 26.0,
+              fontFamily: 'Kelvetica',
             ),
-            leading: IconButton(
-                icon: Icon(
-                  Icons.arrow_back,
-                  color: Color(0xFFC54C82),
-                ),
-                onPressed: () {
-                  Navigator.pop(context, true);
-                }),
-            actions: <Widget>[
-              GestureDetector(
-                child: Container(
-                  width: 40.0,
-                  height: 40.0,
-                  margin: EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    image: DecorationImage(
-                      image: AssetImage('assets/logo/logo3.png'),
-                      fit: BoxFit.cover,
-                    ),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(50.0),
-                    ),
+          ),
+          leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back,
+                color: Color(0xFFC54C82),
+              ),
+              onPressed: () {
+                Navigator.pop(context, true);
+              }),
+          actions: <Widget>[
+            GestureDetector(
+              child: Container(
+                width: 40.0,
+                height: 40.0,
+                margin: EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  image: DecorationImage(
+                    image: AssetImage('assets/logo/logo3.png'),
+                    fit: BoxFit.cover,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(50.0),
                   ),
                 ),
-                onTap: () => devsDialog(context),
               ),
-            ],
-            bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(38.0),
-              child: Theme(
-                data:
-                    Theme.of(context).copyWith(accentColor: Color(0xFFC54C82)),
-                child: Container(
-                  height: 38.0,
-                  alignment: Alignment.center,
-                  child: TabPageSelector(controller: _tabController),
-                ),
+              onTap: () => devsDialog(context),
+            ),
+          ],
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(38.0),
+            child: Theme(
+              data: Theme.of(context).copyWith(accentColor: Color(0xFFC54C82)),
+              child: Container(
+                height: 38.0,
+                alignment: Alignment.center,
+                child: TabPageSelector(controller: _tabController),
               ),
             ),
           ),
-          body: Container(
-            color: Color(0xFFC54C82),
-            child: TabBarView(
-                controller: _tabController,
-                children: choices.map((Choice choice) {
-                  return Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: ChoiceCard(choice: choice),
-                  );
-                }).toList()),
-          ),
-        ));
+        ),
+        body: Container(
+          color: Color(0xFFC54C82),
+          child: TabBarView(
+              controller: _tabController,
+              children: choices.map((Choice choice) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ChoiceCard(choice: choice),
+                );
+              }).toList()),
+        ),
+      ),
+    );
   }
 }
 
@@ -126,18 +126,13 @@ class ChoiceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle textStyle = Theme.of(context).textTheme.display1;
     return Card(
-      color: Colors.white,
+      elevation: 0.5,
+      color: Color(0xFFC54C82),
       child: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Image(
-              image: AssetImage(choice.link),
-              fit: BoxFit.contain,
-            ),
-          ],
+        child: Image(
+          image: AssetImage(choice.link),
+          fit: BoxFit.scaleDown,
         ),
       ),
     );
