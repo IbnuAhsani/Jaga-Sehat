@@ -18,7 +18,7 @@ class _KontakScreen2 extends State<KontakScreen2> {
         onPressed: () {
           Navigator.pop(context, true);
         });
-        
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -30,18 +30,24 @@ class _KontakScreen2 extends State<KontakScreen2> {
         appBar: CustomAppBar3(
           button: backButton,
         ),
-        body: Container(
-          margin: EdgeInsets.only(right: 8.0, left: 8.0),
-          child: ListView(
-            children: <Widget>[
-              CardWidget('assets/pic/bcs.png', dataBcs),
-              CardWidget('assets/pic/place_holder.jpg', dataYkp),
-              CardWidget('assets/pic/yki.jpg', dataYki),
-              CardWidget('assets/pic/bpjs_jabar.jpg', dataBpjsJ),
-              CardWidget('assets/pic/bpjs_bandung.jpg', dataBpjsB),
-              CardWidget('assets/pic/bpjs_soreang.jpg', dataBpjsS),
-            ],
-          ),
+        body: OrientationBuilder(
+          builder: (BuildContext context, Orientation orientation) {
+            return Container(
+              margin: orientation == Orientation.portrait
+                  ? EdgeInsets.only(right: 8.0, left: 8.0)
+                  : EdgeInsets.only(right: 128.0, left: 128.0),
+              child: ListView(
+                children: <Widget>[
+                  CardWidget('assets/pic/bcs.png', dataBcs),
+                  CardWidget('assets/pic/place_holder.jpg', dataYkp),
+                  CardWidget('assets/pic/yki.jpg', dataYki),
+                  CardWidget('assets/pic/bpjs_jabar.jpg', dataBpjsJ),
+                  CardWidget('assets/pic/bpjs_bandung.jpg', dataBpjsB),
+                  CardWidget('assets/pic/bpjs_soreang.jpg', dataBpjsS),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
@@ -57,7 +63,7 @@ _launchUrl(String uri) async {
 }
 
 class NameWidget extends StatelessWidget {
-  String name;
+  final String name;
 
   NameWidget(this.name);
 
@@ -79,7 +85,7 @@ class NameWidget extends StatelessWidget {
 }
 
 class ListTileWidget extends StatelessWidget {
-  String data, type;
+  final String data, type;
 
   ListTileWidget(this.data, this.type);
 
@@ -188,8 +194,8 @@ class ListTileWidget extends StatelessWidget {
 }
 
 class CardWidget extends StatelessWidget {
-  String assetPath;
-  List<Widget> extraWidget;
+  final String assetPath;
+  final List<Widget> extraWidget;
 
   CardWidget(this.assetPath, this.extraWidget);
 
