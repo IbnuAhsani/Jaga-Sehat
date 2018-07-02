@@ -1,6 +1,7 @@
 import './homeScreen.dart';
 import './reusableWidgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
@@ -80,10 +81,6 @@ class _FormScreenState extends State<FormScreen> {
                           image: DecorationImage(
                             fit: BoxFit.fill,
                             image: AssetImage('assets/logo/logo3.png'),
-                          ),
-                          border: Border.all(
-                            color: Color(0xFF512E67),
-                            width: 1.0,
                           ),
                         ),
                       ),
