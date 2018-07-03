@@ -1,5 +1,6 @@
 import './homeScreen.dart';
 import './reusableWidgets.dart';
+import './backgrounds.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -26,28 +27,36 @@ class _KontakScreen2 extends State<KontakScreen2> {
         accentColor: Color(0xFFC54C82),
       ),
       home: Scaffold(
-        backgroundColor: Color(0xFF512E67),
         appBar: CustomAppBar3(
           button: backButton,
         ),
-        body: OrientationBuilder(
-          builder: (BuildContext context, Orientation orientation) {
-            return Container(
-              margin: orientation == Orientation.portrait
-                  ? EdgeInsets.only(right: 8.0, left: 8.0)
-                  : EdgeInsets.only(right: 128.0, left: 128.0),
-              child: ListView(
-                children: <Widget>[
-                  CardWidget('assets/pic/bcs.png', dataBcs),
-                  CardWidget('assets/pic/place_holder.jpg', dataYkp),
-                  CardWidget('assets/pic/yki.jpg', dataYki),
-                  CardWidget('assets/pic/bpjs_jabar.jpg', dataBpjsJ),
-                  CardWidget('assets/pic/bpjs_bandung.jpg', dataBpjsB),
-                  CardWidget('assets/pic/bpjs_soreang.jpg', dataBpjsS),
-                ],
-              ),
-            );
-          },
+        body: Stack(
+          children: <Widget>[
+            Positioned(
+              child: SingleColorOverlay(Color(0xFF512E67)),
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+            ),
+            OrientationBuilder(
+              builder: (BuildContext context, Orientation orientation) {
+                return Container(
+                  margin: orientation == Orientation.portrait
+                      ? EdgeInsets.only(right: 10.0, left: 10.0)
+                      : EdgeInsets.only(right: 128.0, left: 128.0),
+                  child: ListView(
+                    children: <Widget>[
+                      CardWidget('assets/pic/bcs.png', dataBcs),
+                      CardWidget('assets/pic/place_holder.jpg', dataYkp),
+                      CardWidget('assets/pic/yki.jpg', dataYki),
+                      CardWidget('assets/pic/bpjs_jabar.jpg', dataBpjsJ),
+                      CardWidget('assets/pic/bpjs_bandung.jpg', dataBpjsB),
+                      CardWidget('assets/pic/bpjs_soreang.jpg', dataBpjsS),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ],
         ),
       ),
     );
@@ -201,31 +210,33 @@ class CardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 0.5,
-      child: Padding(
-        padding: EdgeInsets.only(bottom: 8.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Image.asset(
-              '$assetPath',
-              fit: BoxFit.fitWidth,
+    return Container(
+        margin: EdgeInsets.only(top: 4.0, bottom: 4.0),
+        child: Card(
+          elevation: 0.5,
+          child: Padding(
+            padding: EdgeInsets.only(bottom: 8.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Image.asset(
+                  '$assetPath',
+                  fit: BoxFit.fitWidth,
+                ),
+                Container(
+                  padding: EdgeInsets.only(
+                    left: 12.0,
+                    right: 12.0,
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: extraWidget,
+                  ),
+                ),
+              ],
             ),
-            Container(
-              padding: EdgeInsets.only(
-                left: 12.0,
-                right: 12.0,
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: extraWidget,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }
 

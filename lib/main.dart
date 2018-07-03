@@ -1,23 +1,24 @@
 import './formScreen.dart';
 import './homeScreen.dart';
+import './backgrounds.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  runApp(new MaterialApp(
+  runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: new SplashScreen(),
+    home: SplashScreen(),
     routes: <String, WidgetBuilder>{
-      '/FormScreen': (BuildContext context) => new FormScreen()
+      '/FormScreen': (BuildContext context) => FormScreen()
     },
   ));
 }
 
 class SplashScreen extends StatefulWidget {
   @override
-  _SplashScreenState createState() => new _SplashScreenState();
+  _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
@@ -27,18 +28,18 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (_seen) {
       Navigator.of(context).pushReplacement(
-          new MaterialPageRoute(builder: (context) => new HomeScreen()));
+          MaterialPageRoute(builder: (context) => HomeScreen()));
     } else {
       prefs.setBool('seen', true);
       Navigator.of(context).pushReplacement(
-          new MaterialPageRoute(builder: (context) => new FormScreen()));
+          MaterialPageRoute(builder: (context) => FormScreen()));
     }
   }
 
   startTime() async {
-    var _duration = new Duration(seconds: 2);
-    // return new Timer(_duration, checkFirstSeen);
-    return new Timer(_duration, navigationPage);
+    var _duration = Duration(seconds: 2);
+    // return Timer(_duration, checkFirstSeen);
+    return Timer(_duration, navigationPage);
   }
 
   void navigationPage() {
@@ -53,14 +54,23 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      backgroundColor: new Color(0xFFC54C82),
-      body: new Center(
-        child: new CircleAvatar(
-          child: new Image.asset('assets/logo/logo1.png'),
-          backgroundColor: Colors.white,
-          radius: 120.0,
-        ),
+    return Scaffold(
+      backgroundColor: Color(0xFFC54C82),
+      body: Stack(
+        children: <Widget>[
+          Positioned(
+            child: SplashOverlay(Colors.white),
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+          ),
+          Center(
+            child: CircleAvatar(
+              child: Image.asset('assets/logo/logo1.png'),
+              backgroundColor: Colors.white,
+              radius: 120.0,
+            ),
+          ),
+        ],
       ),
     );
   }
