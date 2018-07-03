@@ -12,7 +12,7 @@ class FormScreen extends StatefulWidget {
 }
 
 class _FormScreenState extends State<FormScreen> {
-  String selectedJk, selectedPendidikan, selectedPekerjaan;
+  String selectedJk, selectedUsia, selectedPendidikan, selectedPekerjaan;
   Map<String, String> timeStamp;
   Item item;
   List<Item> items = List();
@@ -80,22 +80,39 @@ class _FormScreenState extends State<FormScreen> {
       ),
     );
 
-    var usiaTextField = TextFormField(
-      decoration: InputDecoration(hintText: "Usia"),
-      keyboardType: TextInputType.number,
-      initialValue: "",
-      onSaved: (val) => item.usia = val,
-      validator: (value) => value.isEmpty ? 'Email can\'t be empty' : null,
+    var usiaDropdown = DropdownButton<String>(
+      hint: Text('Usia'),
+      value: selectedUsia,
+      onChanged: (newVal) {
+        item.usia = newVal;
+        setState(() {
+          selectedUsia = newVal;
+        });
+      },
+      items: <String>[
+        '6 - 17',
+        '18 - 29',
+        '30 - 45',
+        '46 - 60',
+        '60+',
+      ].map((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
     );
 
-    var usiaInput = Expanded(
+    var usiaInput = Flexible(
       child: ListTile(
-        dense: true,
         leading: const Icon(
           Icons.calendar_today,
           color: const Color(0xFFC54C82),
         ),
-        title: usiaTextField,
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[usiaDropdown],
+        ),
       ),
     );
 
@@ -220,7 +237,7 @@ class _FormScreenState extends State<FormScreen> {
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
-                                Logo(160.0),
+                                Logo(80.0),
                                 FormTitle(),
                                 Form(
                                   key: formKey,
@@ -307,22 +324,13 @@ class _FormScreenState extends State<FormScreen> {
                                       children: <Widget>[
                                         Row(
                                           children: <Widget>[
-                                            Icon(
-                                              Icons.person,
-                                              color: Color(0xFFC54C82),
-                                            ),
+                                            CustomIcon(Icons.person),
                                             RowDivider(16.0),
                                             jkDropdown,
-                                            RowDivider(32.0),
-                                            Icon(
-                                              Icons.calendar_today,
-                                              color: Color(0xFFC54C82),
-                                            ),
+                                            RowDivider(46.0),
+                                            CustomIcon(Icons.calendar_today),
                                             RowDivider(16.0),
-                                            Container(
-                                              width: 50.0,
-                                              child: usiaTextField,
-                                            ),
+                                            usiaDropdown
                                           ],
                                         ),
                                         CustomRow(
@@ -330,16 +338,13 @@ class _FormScreenState extends State<FormScreen> {
                                         CustomRow(
                                           Icons.email,
                                           Container(
-                                            width: 190.0,
+                                            width: 255.0,
                                             child: emailTextField,
                                           ),
                                         ),
                                         Row(
                                           children: <Widget>[
-                                            Icon(
-                                              Icons.work,
-                                              color: Color(0xFFC54C82),
-                                            ),
+                                            CustomIcon(Icons.work),
                                             RowDivider(16.0),
                                             pekDropdown,
                                             RowDivider(8.0),
@@ -392,9 +397,13 @@ class RowDivider extends Container {
   RowDivider(double d) : super(margin: EdgeInsets.only(right: d));
 }
 
+class CustomIcon extends Icon{
+  CustomIcon(IconData icon) : super(icon, color: Color(0xFFC54C82));
+}
+
 class CustomRow extends StatelessWidget {
-  IconData icon;
-  Widget widget;
+  final IconData icon;
+  final Widget widget;
 
   CustomRow(this.icon, this.widget);
 
@@ -402,10 +411,7 @@ class CustomRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        Icon(
-          this.icon,
-          color: Color(0xFFC54C82),
-        ),
+        CustomIcon(this.icon),
         RowDivider(16.0),
         this.widget,
       ],
@@ -414,7 +420,7 @@ class CustomRow extends StatelessWidget {
 }
 
 class Logo extends StatelessWidget {
-  double radius;
+  final double radius;
 
   Logo(this.radius);
 
