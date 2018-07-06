@@ -12,6 +12,7 @@ class FormScreen extends StatefulWidget {
 }
 
 class _FormScreenState extends State<FormScreen> {
+  bool validateJk, validateUsia, validatePen, validatePek;
   String selectedJk, selectedUsia, selectedPendidikan, selectedPekerjaan;
   Map<String, String> timeStamp;
   Item item;
@@ -23,8 +24,12 @@ class _FormScreenState extends State<FormScreen> {
   @override
   void initState() {
     super.initState();
-
-    item = Item("", "", "", "", "", ServerValue.timestamp);
+    validateJk = false;
+    validateUsia = false;
+    validatePen = false;
+    validatePek = false;
+    item = Item(
+        "kosong", "kosong", "kosong", "kosong", null, ServerValue.timestamp);
     final FirebaseDatabase database = FirebaseDatabase.instance;
     itemRef = database.reference().child('data_pengguna');
   }
@@ -34,7 +39,7 @@ class _FormScreenState extends State<FormScreen> {
 
     if (form.validate()) {
       form.save();
-      form.reset();
+      // form.reset();
       itemRef.push().set(item.toJson());
     }
   }
@@ -47,10 +52,13 @@ class _FormScreenState extends State<FormScreen> {
       hint: Text('Kelamin'),
       value: selectedJk,
       onChanged: (newVal) {
-        item.jk = newVal;
-        setState(() {
-          selectedJk = newVal;
-        });
+        if (newVal.isNotEmpty) {
+          item.jk = newVal;
+          setState(() {
+            selectedJk = newVal;
+            validateJk = true;
+          });
+        }
       },
       items: <String>[
         'Pria',
@@ -67,10 +75,7 @@ class _FormScreenState extends State<FormScreen> {
       flex: 1,
       child: ListTile(
         dense: true,
-        leading: const Icon(
-          Icons.person,
-          color: const Color(0xFFC54C82),
-        ),
+        leading: CustomIcon(Icons.person),
         title: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -84,10 +89,13 @@ class _FormScreenState extends State<FormScreen> {
       hint: Text('Usia'),
       value: selectedUsia,
       onChanged: (newVal) {
-        item.usia = newVal;
-        setState(() {
-          selectedUsia = newVal;
-        });
+        if (newVal.isNotEmpty) {
+          item.usia = newVal;
+          setState(() {
+            selectedUsia = newVal;
+            validateUsia = true;
+          });
+        }
       },
       items: <String>[
         '6 - 17',
@@ -105,10 +113,7 @@ class _FormScreenState extends State<FormScreen> {
 
     var usiaInput = Flexible(
       child: ListTile(
-        leading: const Icon(
-          Icons.calendar_today,
-          color: const Color(0xFFC54C82),
-        ),
+        leading: CustomIcon(Icons.calendar_today),
         title: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[usiaDropdown],
@@ -120,10 +125,13 @@ class _FormScreenState extends State<FormScreen> {
       hint: Text('Tingkat Pendidikan'),
       value: selectedPendidikan,
       onChanged: (newVal) {
-        item.pendidikan = newVal;
-        setState(() {
-          selectedPendidikan = newVal;
-        });
+        if (newVal.isNotEmpty) {
+          item.pendidikan = newVal;
+          setState(() {
+            selectedPendidikan = newVal;
+            validatePen = true;
+          });
+        }
       },
       items: <String>[
         'SD',
@@ -140,10 +148,7 @@ class _FormScreenState extends State<FormScreen> {
 
     var penInput = Flexible(
       child: ListTile(
-        leading: const Icon(
-          Icons.import_contacts,
-          color: const Color(0xFFC54C82),
-        ),
+        leading: CustomIcon(Icons.import_contacts),
         title: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[penDropdown],
@@ -155,10 +160,13 @@ class _FormScreenState extends State<FormScreen> {
       hint: Text('Pekerjaan'),
       value: selectedPekerjaan,
       onChanged: (newVal) {
-        item.pekerjaan = newVal;
-        setState(() {
-          selectedPekerjaan = newVal;
-        });
+        if (newVal.isNotEmpty) {
+          item.pekerjaan = newVal;
+          setState(() {
+            selectedPekerjaan = newVal;
+            validatePek = true;
+          });
+        }
       },
       items: <String>[
         'PNS',
@@ -177,10 +185,7 @@ class _FormScreenState extends State<FormScreen> {
 
     var pekInput = Flexible(
       child: ListTile(
-        leading: const Icon(
-          Icons.work,
-          color: const Color(0xFFC54C82),
-        ),
+        leading: CustomIcon(Icons.work),
         title: Row(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
@@ -192,19 +197,32 @@ class _FormScreenState extends State<FormScreen> {
 
     var emailTextField = TextFormField(
       decoration: InputDecoration(hintText: "Email"),
-      initialValue: "",
-      onSaved: (val) => item.email = val,
-      validator: (value) => value.isEmpty ? 'Email can\'t be empty' : null,
+      onSaved: (val) =>
+          val.isEmpty ? item.email = 'Tidak punya email' : item.email = val,
     );
 
     var emailInput = Flexible(
       child: ListTile(
-          leading: const Icon(
-            Icons.email,
-            color: const Color(0xFFC54C82),
-          ),
-          title: emailTextField),
+        leading: CustomIcon(Icons.email),
+        title: emailTextField,
+      ),
     );
+
+    Function isButtonActive() {
+      if (validateJk && validateUsia && validatePen && validatePek == true) {
+        return () {
+          handleSubmit();
+          var routes = MaterialPageRoute(
+            builder: (BuildContext context) => HomeScreen(),
+          );
+          Navigator.of(context).pushReplacement(routes);
+        };
+      } else {
+        return null;
+      }
+    }
+
+    ;
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -238,7 +256,7 @@ class _FormScreenState extends State<FormScreen> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 Logo(80.0),
-                                FormTitle(),
+                                FormTitle(24.0),
                                 Form(
                                   key: formKey,
                                   child: Column(
@@ -253,28 +271,7 @@ class _FormScreenState extends State<FormScreen> {
                                       penInput,
                                       pekInput,
                                       emailInput,
-                                      Container(
-                                        width: screenSize.width,
-                                        margin: EdgeInsets.all(20.0),
-                                        child: RaisedButton(
-                                          color: Color(0xFF512E67),
-                                          child: Text(
-                                            'Unggah',
-                                            style:
-                                                TextStyle(color: Colors.white),
-                                          ),
-                                          onPressed: () {
-                                            handleSubmit();
-                                            var routes = MaterialPageRoute(
-                                              builder: (BuildContext context) =>
-                                                  HomeScreen(),
-                                            );
-                                            Navigator
-                                                .of(context)
-                                                .pushReplacement(routes);
-                                          },
-                                        ),
-                                      ),
+                                      CustomButton(screenSize.width, isButtonActive()),
                                     ],
                                   ),
                                 ),
@@ -289,97 +286,73 @@ class _FormScreenState extends State<FormScreen> {
                             elevation: 0.5,
                             child: Container(
                               padding: EdgeInsets.only(
-                                  left: 8.0,
-                                  right: 8.0,
-                                  top: 16.0,
-                                  bottom: 12.0,
-                                  ),
+                                left: 8.0,
+                                right: 8.0,
+                                top: 16.0,
+                                bottom: 12.0,
+                              ),
                               child: Form(
                                 key: formKey,
-                                child: 
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Container(
-                                    margin:
-                                        EdgeInsets.only(left: 8.0, right: 8.0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        Logo(120.0),
-                                        FormTitle(),
-                                      ],
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                          left: 8.0, right: 8.0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          Logo(120.0),
+                                          FormTitle(20.0),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Container(
-                                    margin:
-                                        EdgeInsets.only(left: 8.0, right: 8.0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Row(
-                                          children: <Widget>[
-                                            CustomIcon(Icons.person),
-                                            RowDivider(16.0),
-                                            jkDropdown,
-                                            RowDivider(46.0),
-                                            CustomIcon(Icons.calendar_today),
-                                            RowDivider(16.0),
-                                            usiaDropdown
-                                          ],
-                                        ),
-                                        CustomRow(
-                                            Icons.import_contacts, penDropdown),
-                                        CustomRow(
-                                          Icons.email,
-                                          Container(
-                                            width: 255.0,
-                                            child: emailTextField,
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                          left: 16.0, right: 8.0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Row(
+                                            children: <Widget>[
+                                              CustomIcon(Icons.person),
+                                              RowDivider(16.0),
+                                              jkDropdown,
+                                              RowDivider(46.0),
+                                              CustomIcon(Icons.calendar_today),
+                                              RowDivider(16.0),
+                                              usiaDropdown
+                                            ],
                                           ),
-                                        ),
-                                        Row(
-                                          children: <Widget>[
-                                            CustomIcon(Icons.work),
-                                            RowDivider(16.0),
-                                            pekDropdown,
-                                            RowDivider(8.0),
+                                          CustomRow(Icons.import_contacts,
+                                              penDropdown),
+                                          CustomRow(
+                                            Icons.email,
                                             Container(
-                                              width: 100.0,
-                                              margin: EdgeInsets.all(20.0),
-                                              child: RaisedButton(
-                                                color: Color(0xFF512E67),
-                                                child: Text(
-                                                  'Unggah',
-                                                  style: TextStyle(
-                                                      color: Colors.white),
-                                                ),
-                                                onPressed: () {
-                                                  handleSubmit();
-                                                  var routes =
-                                                      MaterialPageRoute(
-                                                    builder: (BuildContext
-                                                            context) =>
-                                                        HomeScreen(),
-                                                  );
-                                                  Navigator
-                                                      .of(context)
-                                                      .pushReplacement(routes);
-                                                },
-                                              ),
+                                              width: 255.0,
+                                              child: emailTextField,
                                             ),
-                                          ],
-                                        ),
-                                      ],
+                                          ),
+                                          Row(
+                                            children: <Widget>[
+                                              CustomIcon(Icons.work),
+                                              RowDivider(16.0),
+                                              pekDropdown,
+                                              RowDivider(8.0),
+                                              CustomButton(100.0, isButtonActive()),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                              ), 
                             ),
                           ),
                         ),
@@ -397,7 +370,7 @@ class RowDivider extends Container {
   RowDivider(double d) : super(margin: EdgeInsets.only(right: d));
 }
 
-class CustomIcon extends Icon{
+class CustomIcon extends Icon {
   CustomIcon(IconData icon) : super(icon, color: Color(0xFFC54C82));
 }
 
@@ -443,6 +416,10 @@ class Logo extends StatelessWidget {
 }
 
 class FormTitle extends StatelessWidget {
+  final double fontSize;
+
+  FormTitle(this.fontSize);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -453,9 +430,32 @@ class FormTitle extends StatelessWidget {
       child: Text(
         'Form Data Demografi',
         style: TextStyle(
-          fontSize: 24.0,
+          fontSize: fontSize,
           color: Color(0xFFC54C82),
         ),
+      ),
+    );
+  }
+}
+
+class CustomButton extends StatelessWidget {
+  final double width;
+  final Function function;
+
+  CustomButton(this.width, this.function);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: width,
+      margin: EdgeInsets.all(20.0),
+      child: RaisedButton(
+        color: Color(0xFF512E67),
+        child: Text(
+          'Unggah',
+          style: TextStyle(color: Colors.white),
+        ),
+        onPressed: function,
       ),
     );
   }

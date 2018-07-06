@@ -28,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     var literasiRoute =
         MaterialPageRoute(builder: (BuildContext context) => LiterasiScreen());
+
     var kontakRoute =
         MaterialPageRoute(builder: (BuildContext context) => KontakScreen2());
 
@@ -56,6 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
     );
+    
     var literasiButton2 = customContainer(
       false,
       RaisedButton(
@@ -81,6 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
     );
+    
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

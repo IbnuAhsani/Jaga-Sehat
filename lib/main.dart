@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:scheduled_notifications/scheduled_notifications.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -22,6 +23,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
   Future checkFirstSeen() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool _seen = (prefs.getBool('seen') ?? false);
@@ -36,14 +38,13 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  startTime() async {
-    var _duration = Duration(seconds: 2);
-    // return Timer(_duration, checkFirstSeen);
-    return Timer(_duration, navigationPage);
-  }
-
   void navigationPage() {
     Navigator.of(context).pushReplacementNamed('/FormScreen');
+  }
+
+  startTime() async {
+    var _duration = Duration(seconds: 2);
+    return Timer(_duration, checkFirstSeen);
   }
 
   @override

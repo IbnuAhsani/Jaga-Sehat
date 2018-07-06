@@ -22,10 +22,10 @@ _disclaimerDialog(BuildContext context) {
                 Container(
                   margin: EdgeInsets.all(16.0),
                   child: Text(
-                    'Data ini hanya digunakan demi keperluan riset, dan tidak akan disebarluaskan',
+                    'Data ini hanya digunakan untuk keperluan riset dan tidak akan disebarluaskan',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Color(0xFFC54C82),
+                      color: Color(0xFF512E67),
                       fontSize: 22.0,
                     ),
                   ),
@@ -79,7 +79,7 @@ _devsDialog(BuildContext context) {
 }
 
 class NameWidget extends StatelessWidget {
-  String _npm, _name, _assetPath;
+  final String _npm, _name, _assetPath;
 
   NameWidget(this._assetPath, this._npm, this._name);
 
