@@ -22,11 +22,11 @@ _disclaimerDialog(BuildContext context) {
                 Container(
                   margin: EdgeInsets.all(16.0),
                   child: Text(
-                    'Data ini hanya digunakan untuk keperluan riset dan tidak akan disebarluaskan',
+                    'Anda hanya dapat lanjut ke halaman selanjutnya setelah mengisi form ini. Data yang Anda isi hanya digunakan untuk keperluan riset dan tidak akan disebarluaskan',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Color(0xFF512E67),
-                      fontSize: 22.0,
+                      fontSize: 20.0,
                     ),
                   ),
                 ),

@@ -84,7 +84,7 @@ class NameWidget extends StatelessWidget {
         child: Text(
           '$name',
           style: TextStyle(
-            color: Color(0xFFC54C82),
+            color: Color(0xFF512E67),
             fontSize: 24.0,
           ),
         ),
@@ -107,7 +107,7 @@ class ListTileWidget extends StatelessWidget {
           leading: IconButton(
             icon: Icon(
               Icons.phone,
-              color: Color(0xFFC54C82),
+              color: Color(0xFF512E67),
             ),
             onPressed: () {
               _launchUrl('tel:$data');
@@ -126,7 +126,7 @@ class ListTileWidget extends StatelessWidget {
           dense: true,
           leading: Icon(
             Icons.map,
-            color: Color(0xFFC54C82),
+            color: Color(0xFF512E67),
           ),
           title: Text('$data'),
         ),
@@ -137,7 +137,7 @@ class ListTileWidget extends StatelessWidget {
         leading: IconButton(
           icon: Icon(
             Icons.email,
-            color: Color(0xFFC54C82),
+            color: Color(0xFF512E67),
           ),
           onPressed: () {
             _launchUrl('mailto:$data');
@@ -154,7 +154,7 @@ class ListTileWidget extends StatelessWidget {
         leading: IconButton(
           icon: Icon(
             Icons.desktop_windows,
-            color: Color(0xFFC54C82),
+            color: Color(0xFF512E67),
           ),
           onPressed: () {
             _launchUrl('http:$data');
@@ -172,7 +172,7 @@ class ListTileWidget extends StatelessWidget {
             dense: true,
             leading: Icon(
               Icons.print,
-              color: Color(0xFFC54C82),
+              color: Color(0xFF512E67),
             ),
             title: Text('$data'),
           ));
@@ -213,7 +213,6 @@ class CardWidget extends StatelessWidget {
     return Container(
         margin: EdgeInsets.only(top: 4.0, bottom: 4.0),
         child: Card(
-          elevation: 0.5,
           child: Padding(
             padding: EdgeInsets.only(bottom: 8.0),
             child: Column(
@@ -260,7 +259,7 @@ var dataBcs = <Widget>[
 ];
 
 var dataYkp = <Widget>[
-  NameWidget('Yayasan Kesehatan Payudara Jawa Barat'),
+  NameWidget('Yayasan Kesehatan Payudara'),
   Divider(),
   ListTileWidget('Jl. Hegarmanah 3 Bandung 40141', 'alamat'),
   Divider(),

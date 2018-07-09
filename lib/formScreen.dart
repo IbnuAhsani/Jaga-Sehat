@@ -196,7 +196,7 @@ class _FormScreenState extends State<FormScreen> {
     );
 
     var emailTextField = TextFormField(
-      decoration: InputDecoration(hintText: "Email"),
+      decoration: InputDecoration(hintText: "Email (bersifat opsional)"),
       onSaved: (val) =>
           val.isEmpty ? item.email = 'Tidak punya email' : item.email = val,
     );
